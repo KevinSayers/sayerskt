@@ -2,15 +2,27 @@
 layout: default
 ---
 
+<span class="section-label">Writing</span>
 
 <ul class="post-list">
-    {% for post in paginator.posts %}
-      <li>
-        <h2><a class="post-title" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
-        <p class="post-meta">{{ post.date | date: '%B %-d, %Y — %H:%M' }}</p>
-        <p>{{ post.description }}</p>
-        <br/>
-        <hr/>
-      </li>
-    {% endfor %}
+  {% for post in paginator.posts %}
+    <li>
+      <span class="post-meta">{{ post.date | date: '%Y &mdash; %m &mdash; %d' }}</span>
+      <h2><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
+      {% if post.description %}<p class="post-excerpt">{{ post.description }}</p>{% endif %}
+    </li>
+  {% endfor %}
 </ul>
+
+{% if paginator.total_pages > 1 %}
+<div class="pagination">
+  {% if paginator.previous_page %}
+    <a class="pagination-link" href="{{ paginator.previous_page_path | prepend: site.baseurl }}">&larr; newer</a>
+  {% else %}
+    <span></span>
+  {% endif %}
+  {% if paginator.next_page %}
+    <a class="pagination-link" href="{{ paginator.next_page_path | prepend: site.baseurl }}">older &rarr;</a>
+  {% endif %}
+</div>
+{% endif %}
